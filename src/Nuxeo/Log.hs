@@ -30,9 +30,9 @@ data NuxeoLogEntry = NuxeoLogEntry {
 type NuxeoLog = [NuxeoLogEntry]
 
 -- |Parse Nuxeo server.log
--- > logs <- parseNuxeoLog v "/opt/nuxeo-data/log/server.log"
--- > filter (\l -> (nuxeoLogEntryType l == Error)
--- >            || (nuxeoLogEntryType l == Warning)) logs
+-- >logs <- parseNuxeoLog v "/opt/nuxeo-data/log/server.log"
+-- >filter (\l -> (nuxeoLogEntryType l == Error)
+-- >           || (nuxeoLogEntryType l == Warning)) logs
 parseNuxeoLog :: Verbose -> FilePath -> IO NuxeoLog
 parseNuxeoLog v logpath = runConduitRes $ sourceFile logpath .| sinkParser (nuxeoLogParser v)
 
