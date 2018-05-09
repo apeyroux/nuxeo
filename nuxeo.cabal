@@ -2,7 +2,7 @@
 --  see http://haskell.org/cabal/users-guide/
 
 name:                nuxeo
-version:             0.2.0.0
+version:             0.2.0.1
 synopsis:            Nuxeo
 description:         Nuxeo
 license:             BSD3
