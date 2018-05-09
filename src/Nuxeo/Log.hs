@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Nuxeo.Log (
+  NuxeoLog, 
   NuxeoLogVerbose
   , NuxeoLogType (..)
   , NuxeoLogEntry (..)
