@@ -21,7 +21,7 @@ library
   -- other-extensions:
   exposed-modules:     Nuxeo.Log
   ghc-options:         -Wall
-  build-depends:       base >=4.10 && <4.11
+  build-depends:       base
                      , attoparsec
                      , bytestring
                      , conduit
