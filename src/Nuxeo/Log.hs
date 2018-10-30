@@ -79,8 +79,7 @@ timeParser = do
   h  <- char ' ' *> count 2 digit
   m  <- char ':' *> count 2 digit
   s  <- char ':' *> count 2 digit
-        *> char ','
-        *> count 3 digit
+  _  <- char ',' *> count 3 digit
   return $
     LocalTime { localDay = fromGregorian (read y) (read mm) (read d)
               , localTimeOfDay = TimeOfDay (read h) (read m) (read s)
