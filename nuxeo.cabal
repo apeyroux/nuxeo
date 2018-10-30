@@ -2,10 +2,10 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5cd9160f3e03d7882de953ffc6fbd27d624d06a39721394671a747afdbe4c317
+-- hash: 7b38063f3f56ba357f013f162de10b1a9863401f14d65a0c9118af59eb7b2f85
 
 name:           nuxeo
-version:        0.3.0.0
+version:        0.3.0.2
 description:    Nuxeo tools
 category:       System
 homepage:       https://github.com/apeyroux/nuxeo#readme
@@ -31,7 +31,7 @@ library
   ghc-options: -Wall
   build-depends:
       attoparsec
-    , base >=4.5 && <4.7
+    , base >=4.2 && <5
     , bytestring
     , conduit
     , conduit-extra
@@ -47,7 +47,7 @@ executable nuxeo
       app
   ghc-options: -Wall
   build-depends:
-      base >=4.5 && <4.7
+      base >=4.2 && <5
     , nuxeo
     , optparse-applicative
     , text

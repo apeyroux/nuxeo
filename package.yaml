@@ -1,5 +1,5 @@
 name: nuxeo
-version: 0.3.0.0
+version: 0.3.0.2
 github: apeyroux/nuxeo
 author: Alexandre Peyroux
 maintainer: alex@xn--wxa.email
@@ -13,7 +13,7 @@ library:
   source-dirs: src
   dependencies:
     - attoparsec
-    - base >= 4.5 && < 4.7
+    - base >= 4.2 && < 5
     - bytestring
     - conduit
     - conduit-extra
@@ -24,7 +24,7 @@ executable:
   main: Main.hs
   source-dirs: app
   dependencies:
-    - base >= 4.5 && < 4.7
+    - base >= 4.2 && < 5
     - nuxeo
     - optparse-applicative
     - text
