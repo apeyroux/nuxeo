@@ -1,8 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Nuxeo.Log (
-  NuxeoLog, 
-  NuxeoLogVerbose
+  NuxeoLog
   , NuxeoLogType (..)
   , NuxeoLogEntry (..)
   , parseNuxeoLog
@@ -16,8 +15,6 @@ import           Data.Conduit.Attoparsec
 import           Data.Conduit.Binary
 import qualified Data.Text as T
 import           Data.Time
-
-type NuxeoLogVerbose = Bool
 
 data NuxeoLogType = Debug | Error | Warning | Info deriving (Show, Read, Eq)
 
@@ -34,25 +31,29 @@ type NuxeoLog = [NuxeoLogEntry]
 -- | Parse Nuxeo server.log
 --
 -- @
--- logs <- parseNuxeoLog v "/opt/nuxeo-data/log/server.log"
--- filter (\l -> (nuxeoLogEntryType l == Error)
---            || (nuxeoLogEntryType l == Warning)) logs
+-- parseNuxeoLog "./server.log"
+--   >>= return . filter (\l -> nuxeoLogEntryType l == Error)
+--   >>= mapM_ (\t ->
+--                 putStrLn $ (show $ nuxeoLogEntryType t)
+--                 <>  " "
+--                 <> (Text.unpack $ nuxeoLogEntryAction t)
+--                 <> " "
+--                 <> (Text.unpack $ nuxeoLogEntryLog t)
+--             )
 -- @
-parseNuxeoLog :: NuxeoLogVerbose -> FilePath -> IO NuxeoLog
-parseNuxeoLog v logpath = runConduitRes $ sourceFile logpath .| sinkParser (nuxeoLogParser v)
+parseNuxeoLog :: FilePath -> IO NuxeoLog
+parseNuxeoLog logpath = runConduitRes $ sourceFile logpath .| sinkParser nuxeoLogParser
 
-nuxeoLogParser :: NuxeoLogVerbose -> Parser NuxeoLog
-nuxeoLogParser v = many $ (nuxeoLogEntryParser v <* endOfLine)
+nuxeoLogParser :: Parser NuxeoLog
+nuxeoLogParser = many $ (nuxeoLogEntryParser <* endOfLine)
 
-nuxeoLogEntryParser :: NuxeoLogVerbose -> Parser NuxeoLogEntry
-nuxeoLogEntryParser v = do
+nuxeoLogEntryParser :: Parser NuxeoLogEntry
+nuxeoLogEntryParser = do
   ptime <- timeParser
   ptype <- space *> nuxeoTypeLogParser
   psection <- space *> nuxeoLogEntrySectionParser
   paction <- space *> nuxeoLogEntryActionParser
-  pnuxeolog <- case v of
-    True -> space *> manyTill' anyChar (try $ lookAhead $ char '\n' *> timeParser)
-    False -> space *> manyTill' anyChar (try $ lookAhead $ char '\n')
+  pnuxeolog <- space *> manyTill' anyChar (try $ lookAhead $ char '\n' *> timeParser)
   return $ NuxeoLogEntry ptime ptype psection paction (T.pack pnuxeolog)
 
 nuxeoTypeLogParser :: Parser NuxeoLogType
