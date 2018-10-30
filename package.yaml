@@ -1,18 +1,30 @@
 name: nuxeo
-version: 0.2.0.3
-github: https://github.com/apeyroux/nuxeo
+version: 0.3.0.0
+github: apeyroux/nuxeo
 author: Alexandre Peyroux
 maintainer: alex@xn--wxa.email
+category: System
+license: BSD3
+description: Nuxeo tools
 
 ghc-options: -Wall
 
 library:
   source-dirs: src
-dependencies:
-  - base
-  - attoparsec
-  - bytestring
-  - conduit
-  - conduit-extra
-  - text
-  - time
+  dependencies:
+    - attoparsec
+    - base >= 4.5 && < 4.7
+    - bytestring
+    - conduit
+    - conduit-extra
+    - text
+    - time
+
+executable:
+  main: Main.hs
+  source-dirs: app
+  dependencies:
+    - base >= 4.5 && < 4.7
+    - nuxeo
+    - optparse-applicative
+    - text

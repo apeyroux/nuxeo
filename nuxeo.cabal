@@ -2,21 +2,24 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 046d33c63ea93d407176b560b220a92898bb05b8aee845c428c3602b94eea117
+-- hash: 5cd9160f3e03d7882de953ffc6fbd27d624d06a39721394671a747afdbe4c317
 
 name:           nuxeo
-version:        0.2.0.3
-homepage:       https://github.com/https://github.com/apeyroux/nuxeo#readme
-bug-reports:    https://github.com/https://github.com/apeyroux/nuxeo/issues
+version:        0.3.0.0
+description:    Nuxeo tools
+category:       System
+homepage:       https://github.com/apeyroux/nuxeo#readme
+bug-reports:    https://github.com/apeyroux/nuxeo/issues
 author:         Alexandre Peyroux
 maintainer:     alex@xn--wxa.email
+license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
 
 source-repository head
   type: git
-  location: https://github.com/https://github.com/apeyroux/nuxeo
+  location: https://github.com/apeyroux/nuxeo
 
 library
   exposed-modules:
@@ -28,10 +31,24 @@ library
   ghc-options: -Wall
   build-depends:
       attoparsec
-    , base
+    , base >=4.5 && <4.7
     , bytestring
     , conduit
     , conduit-extra
     , text
     , time
+  default-language: Haskell2010
+
+executable nuxeo
+  main-is: Main.hs
+  other-modules:
+      Paths_nuxeo
+  hs-source-dirs:
+      app
+  ghc-options: -Wall
+  build-depends:
+      base >=4.5 && <4.7
+    , nuxeo
+    , optparse-applicative
+    , text
   default-language: Haskell2010
