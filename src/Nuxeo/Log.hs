@@ -53,7 +53,12 @@ nuxeoLogEntryParser = do
   ptype <- space *> nuxeoTypeLogParser
   psection <- space *> nuxeoLogEntrySectionParser
   paction <- space *> nuxeoLogEntryActionParser
-  pnuxeolog <- space *> manyTill' anyChar (try $ lookAhead $ char '\n' *> timeParser)
+  pnuxeolog <- space *> manyTill' anyChar (try $ lookAhead $ (char '\n'
+                                                               *> timeParser
+                                                               *> space
+                                                               *> nuxeoTypeLogParser
+                                                               *> space
+                                                               *> nuxeoLogEntryActionParser))
   return $ NuxeoLogEntry ptime ptype psection paction (T.pack pnuxeolog)
 
 nuxeoTypeLogParser :: Parser NuxeoLogType
