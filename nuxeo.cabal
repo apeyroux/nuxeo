@@ -2,10 +2,10 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7b38063f3f56ba357f013f162de10b1a9863401f14d65a0c9118af59eb7b2f85
+-- hash: bb5fa80fde8b86da14e894b06082b42de1387207301a88c6460423fbff9ddac8
 
 name:           nuxeo
-version:        0.3.0.2
+version:        0.3.0.3
 description:    Nuxeo tools
 category:       System
 homepage:       https://github.com/apeyroux/nuxeo#readme
@@ -23,20 +23,25 @@ source-repository head
 
 library
   exposed-modules:
+      Nuxeo.ElasticSearch
       Nuxeo.Log
   other-modules:
       Paths_nuxeo
   hs-source-dirs:
       src
-  ghc-options: -Wall
+  ghc-options: -Wall -O2 -threaded -rtsopts
   build-depends:
-      attoparsec
+      aeson
+    , attoparsec
     , base >=4.2 && <5
     , bytestring
     , conduit
     , conduit-extra
+    , http-conduit
+    , http-types
     , text
     , time
+    , url
   default-language: Haskell2010
 
 executable nuxeo
@@ -45,7 +50,7 @@ executable nuxeo
       Paths_nuxeo
   hs-source-dirs:
       app
-  ghc-options: -Wall
+  ghc-options: -Wall -O2 -threaded -rtsopts
   build-depends:
       base >=4.2 && <5
     , nuxeo

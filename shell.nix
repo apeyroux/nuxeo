@@ -4,22 +4,24 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, attoparsec, base, bytestring, conduit
-      , conduit-extra, hpack, optparse-applicative, stdenv, text, time
+  f = { mkDerivation, aeson, attoparsec, base, bytestring, conduit
+      , conduit-extra, hpack, http-conduit, http-types
+      , optparse-applicative, stdenv, text, time, url
       }:
       mkDerivation {
         pname = "nuxeo";
-        version = "0.2.0.3";
+        version = "0.3.0.3";
         src = ./.;
         isLibrary = true;
         isExecutable = true;
         libraryHaskellDepends = [
-          attoparsec base bytestring conduit conduit-extra text time
+          aeson attoparsec base bytestring conduit conduit-extra http-conduit
+          http-types text time url
         ];
         libraryToolDepends = [ hpack ];
         executableHaskellDepends = [ base optparse-applicative text ];
         preConfigure = "hpack";
-        homepage = "https://github.com/https://github.com/apeyroux/nuxeo#readme";
+        homepage = "https://github.com/apeyroux/nuxeo#readme";
         license = stdenv.lib.licenses.bsd3;
       };
 
