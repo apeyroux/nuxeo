@@ -12,7 +12,7 @@ import Network.URL
 import Nuxeo.Types
 
 -- | POST @{"params":{},"context":{}}@ to @\/nuxeo\/site\/automation\/Elasticsearch.Index@
-reindex :: Instance -> IO (Either Text Text)
+reindex :: NuxeoInstance -> IO (Either Text Text)
 reindex i =
   -- check if instanceUrl is formated
   case importURL esUrl of

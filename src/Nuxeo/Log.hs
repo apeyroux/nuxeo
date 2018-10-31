@@ -1,10 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Nuxeo.Log (
-  NuxeoLog
-  , NuxeoLogType (..)
-  , NuxeoLogEntry (..)
-  , parseNuxeoLog
+  parseNuxeoLog
   ) where
 
 import           Control.Applicative
@@ -15,18 +12,7 @@ import           Data.Conduit.Attoparsec
 import           Data.Conduit.Binary
 import qualified Data.Text as T
 import           Data.Time
-
-data NuxeoLogType = Debug | Error | Warning | Info deriving (Show, Read, Eq)
-
-data NuxeoLogEntry = NuxeoLogEntry {
-  nuxeoLogEntryDthr :: LocalTime
-  , nuxeoLogEntryType :: NuxeoLogType
-  , nuxeoLogEntrySection :: T.Text
-  , nuxeoLogEntryAction :: T.Text
-  , nuxeoLogEntryLog :: T.Text
-  } deriving Show
-
-type NuxeoLog = [NuxeoLogEntry]
+import           Nuxeo.Types
 
 -- | Parse Nuxeo server.log
 --
@@ -62,10 +48,10 @@ nuxeoLogEntryParser = do
   return $ NuxeoLogEntry ptime ptype psection paction (T.pack pnuxeolog)
 
 nuxeoTypeLogParser :: Parser NuxeoLogType
-nuxeoTypeLogParser = (string "ERROR" *> return Error)
-                     <|> (string "DEBUG" *> return Debug)
-                     <|> (string "WARN" *> return Warning)
-                     <|> (string "INFO" *> return Info)
+nuxeoTypeLogParser = (string "ERROR" *> return NuxeoError)
+                     <|> (string "DEBUG" *> return NuxeoDebug)
+                     <|> (string "WARN" *> return NuxeoWarning)
+                     <|> (string "INFO" *> return NuxeoInfo)
                      <|> fail "Invalid NuxeoTypeLog"
 
 nuxeoLogEntrySectionParser :: Parser T.Text

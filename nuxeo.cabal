@@ -2,10 +2,10 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: af58711cda0cd6cfb99bec58266edbca4d13e7105cdeeb315116d5760891a58d
+-- hash: befb36841125d1c20bebd327452b5ce949036bf73d3403a4587081f8102dcdc3
 
 name:           nuxeo
-version:        0.3.1
+version:        0.3.2
 description:    Nuxeo tools
 category:       System
 homepage:       https://github.com/apeyroux/nuxeo#readme

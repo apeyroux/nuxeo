@@ -39,7 +39,7 @@ parserInfo = info parseOpts
    <>  header "nuxeo - nuxeo cli tools")
 
 -- | Exemple reindex instance
-reindexInstance :: Instance -> IO ()
+reindexInstance :: NuxeoInstance -> IO ()
 reindexInstance i = do
   reindexAction <- reindex i
   case reindexAction of
@@ -49,17 +49,17 @@ reindexInstance i = do
 
 -- | Exemple to extract errors from Nuxeo log
 showErr :: T.Text -> IO()
-showErr logFile = (filter (\l -> nuxeoLogEntryType l == Error) <$> parseNuxeoLog (T.unpack logFile))
-                                >>= mapM_ (\t -> TIO.putStrLn $
-                                                 T.replicate 10 "=" <> "\n"
-                                                 <> T.replicate 5 " " <> (T.pack $ show $ nuxeoLogEntryDthr t)
-                                                 <> "\n" <> T.replicate 10 "=" <> "\n"
-                                                 <> (T.pack $ show $ nuxeoLogEntryType t)
-                                                 <> " - "
-                                                 <> nuxeoLogEntryAction t
-                                                 <> "\n\n"
-                                                 <> nuxeoLogEntryLog t
-                                          )
+showErr logFile = (filter (\l -> nuxeoLogEntryType l == NuxeoError) <$> parseNuxeoLog (T.unpack logFile))
+                  >>= mapM_ (\t -> TIO.putStrLn $
+                                   T.replicate 10 "=" <> "\n"
+                                   <> T.replicate 5 " " <> (T.pack $ show $ nuxeoLogEntryDthr t)
+                                   <> "\n" <> T.replicate 10 "=" <> "\n"
+                                   <> (T.pack $ show $ nuxeoLogEntryType t)
+                                   <> " - "
+                                   <> nuxeoLogEntryAction t
+                                   <> "\n\n"
+                                   <> nuxeoLogEntryLog t
+                            )
 
 
 main :: IO ()
@@ -69,5 +69,5 @@ main = do
 
   if (instanceLogin /= ""
       && instancePassword /= ""
-      && reindexUrl /= "") then reindexInstance (Instance reindexUrl instanceLogin instancePassword) else pure ()
+      && reindexUrl /= "") then reindexInstance (NuxeoInstance reindexUrl instanceLogin instancePassword) else pure ()
   if showErrLogFile /= "" then showErr showErrLogFile else pure ()
