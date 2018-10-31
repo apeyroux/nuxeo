@@ -4,18 +4,19 @@
 
 module Main where
 
-import qualified Data.Text as Text
+import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import           Nuxeo.ElasticSearch
 import           Nuxeo.Log
+import           Nuxeo.Types
 import           Options.Applicative
 
 
 data NuxeoOpts = NuxeoOpts {
-  instanceLogin :: String
-  , instancePassword :: String
-  , reindexUrl :: String
-  , showErrLogFile :: String } deriving Show
+  instanceLogin :: T.Text
+  , instancePassword :: T.Text
+  , reindexUrl :: T.Text
+  , showErrLogFile :: T.Text } deriving Show
 
 
 parseOpts :: Parser NuxeoOpts
@@ -38,22 +39,22 @@ parserInfo = info parseOpts
    <>  header "nuxeo - nuxeo cli tools")
 
 -- | Exemple reindex instance
-reindexInstance :: String -> String -> String -> IO ()
-reindexInstance urli login password = do
-  reindexAction <- reindex login password urli
+reindexInstance :: Instance -> IO ()
+reindexInstance i = do
+  reindexAction <- reindex i
   case reindexAction of
-    Left r -> putStrLn r
-    Right r -> putStrLn r
+    Left r -> TIO.putStrLn r
+    Right r -> TIO.putStrLn r
 
 
 -- | Exemple to extract errors from Nuxeo log
-showErr :: String -> IO()
-showErr logFile = (filter (\l -> nuxeoLogEntryType l == Error) <$> parseNuxeoLog logFile)
+showErr :: T.Text -> IO()
+showErr logFile = (filter (\l -> nuxeoLogEntryType l == Error) <$> parseNuxeoLog (T.unpack logFile))
                                 >>= mapM_ (\t -> TIO.putStrLn $
-                                                 Text.replicate 10 "=" <> "\n"
-                                                 <> Text.replicate 5 " " <> (Text.pack $ show $ nuxeoLogEntryDthr t)
-                                                 <> "\n" <> Text.replicate 10 "=" <> "\n"
-                                                 <> (Text.pack $ show $ nuxeoLogEntryType t)
+                                                 T.replicate 10 "=" <> "\n"
+                                                 <> T.replicate 5 " " <> (T.pack $ show $ nuxeoLogEntryDthr t)
+                                                 <> "\n" <> T.replicate 10 "=" <> "\n"
+                                                 <> (T.pack $ show $ nuxeoLogEntryType t)
                                                  <> " - "
                                                  <> nuxeoLogEntryAction t
                                                  <> "\n\n"
@@ -68,5 +69,5 @@ main = do
 
   if (instanceLogin /= ""
       && instancePassword /= ""
-      && reindexUrl /= "") then reindexInstance reindexUrl instanceLogin instancePassword else pure ()
+      && reindexUrl /= "") then reindexInstance (Instance reindexUrl instanceLogin instancePassword) else pure ()
   if showErrLogFile /= "" then showErr showErrLogFile else pure ()

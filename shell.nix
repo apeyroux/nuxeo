@@ -5,8 +5,8 @@ let
   inherit (nixpkgs) pkgs;
 
   f = { mkDerivation, aeson, attoparsec, base, bytestring, conduit
-      , conduit-extra, hpack, http-conduit, http-types
-      , optparse-applicative, stdenv, text, time, url
+      , conduit-extra, hpack, http-conduit, http-types, stdenv, text
+      , time, url
       }:
       mkDerivation {
         pname = "nuxeo";
@@ -19,7 +19,6 @@ let
           http-types text time url
         ];
         libraryToolDepends = [ hpack ];
-        executableHaskellDepends = [ base optparse-applicative text ];
         preConfigure = "hpack";
         homepage = "https://github.com/apeyroux/nuxeo#readme";
         license = stdenv.lib.licenses.bsd3;
