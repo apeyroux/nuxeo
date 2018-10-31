@@ -11,11 +11,7 @@ import Network.HTTP.Simple
 import Network.URL
 import Nuxeo.Types
 
--- | POST
--- @
--- {"params":{},"context":{}}
--- @
--- to __"/nuxeo/site/automation/Elasticsearch.Index"__
+-- | POST @{"params":{},"context":{}}@ to @/nuxeo/site/automation/Elasticsearch.Index@
 reindex :: Instance -> IO (Either Text Text)
 reindex i =
   -- check if instanceUrl is formated

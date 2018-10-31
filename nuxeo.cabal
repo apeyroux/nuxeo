@@ -2,10 +2,10 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f33c50332c770a8fe52de70be7e50de41aa51175c15849d785fddc812b84496c
+-- hash: fcad9b2525d7d5034e7b79bda840f92c81dd901a6baf924bce2f6231aafc4804
 
 name:           nuxeo
-version:        0.3.0.3
+version:        0.3.0
 description:    Nuxeo tools
 category:       System
 homepage:       https://github.com/apeyroux/nuxeo#readme
@@ -57,5 +57,4 @@ executable nuxeo
     , nuxeo
     , optparse-applicative
     , text
-  buildable: False
   default-language: Haskell2010
