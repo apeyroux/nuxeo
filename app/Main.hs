@@ -37,7 +37,7 @@ parserInfo = info parseOpts
   (progDesc "Nuxeo CLI"
    <>  header "nuxeo - nuxeo cli tools")
 
-
+-- | Exemple reindex instance
 reindexInstance :: String -> String -> String -> IO ()
 reindexInstance urli login password = do
   reindexAction <- reindex login password urli
