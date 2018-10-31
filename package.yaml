@@ -2,16 +2,15 @@ name: nuxeo
 version: 0.3.0.3
 github: apeyroux/nuxeo
 author: Alexandre Peyroux
-maintainer: alex@xn--wxa.email
+maintainer: alex@px.io
 category: System
 license: BSD3
 description: Nuxeo tools
 
-ghc-options: -Wall -O2 -threaded -rtsopts
-
 library:
   # buildable: false
   source-dirs: src
+  ghc-options: -Wall
   dependencies:
     - aeson
     - attoparsec
@@ -29,6 +28,7 @@ executable:
   # buildable: false
   main: Main.hs
   source-dirs: app
+  ghc-options: -Wall -threaded -rtsopts
   dependencies:
     - base >= 4.2 && < 5
     - nuxeo

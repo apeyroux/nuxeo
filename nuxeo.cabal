@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bb5fa80fde8b86da14e894b06082b42de1387207301a88c6460423fbff9ddac8
+-- hash: cf3e6fd641583c528a2a5475ffe131d7fcc51c3422ff94c20479a26d67b9054d
 
 name:           nuxeo
 version:        0.3.0.3
@@ -11,7 +11,7 @@ category:       System
 homepage:       https://github.com/apeyroux/nuxeo#readme
 bug-reports:    https://github.com/apeyroux/nuxeo/issues
 author:         Alexandre Peyroux
-maintainer:     alex@xn--wxa.email
+maintainer:     alex@px.io
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -29,7 +29,7 @@ library
       Paths_nuxeo
   hs-source-dirs:
       src
-  ghc-options: -Wall -O2 -threaded -rtsopts
+  ghc-options: -Wall
   build-depends:
       aeson
     , attoparsec
@@ -50,7 +50,7 @@ executable nuxeo
       Paths_nuxeo
   hs-source-dirs:
       app
-  ghc-options: -Wall -O2 -threaded -rtsopts
+  ghc-options: -Wall -threaded -rtsopts
   build-depends:
       base >=4.2 && <5
     , nuxeo
